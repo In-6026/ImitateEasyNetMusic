@@ -3,21 +3,21 @@
 </template>
 
 <script setup lang="ts">
-import useGlobalProperties from './hooks/useGlobalProperties';
+import useGlobalProperties from './hooks/useGlobalProperties'
 import { useStore } from 'vuex'
-import Storage from './utils/Storage';
+import Storage from './utils/Storage'
 const store = useStore()
 const Axios = useGlobalProperties('Axios')
 //检查用户是否登录
 const checkIsLogin = async () => {
 	return new Promise((resolve, reject) => {
 		Axios.get('/login/refresh').then((data: { code: number }) => {
-			store.commit('setUserLoginState', data?.code == 400 ? true : false);
+			store.commit('setUserLoginState', data?.code == 400 ? true : false)
 			resolve(true)
 		}).catch(() => {
-			store.commit('setUserLoginState', false);
+			store.commit('setUserLoginState', false)
 			reject(false)
-		});
+		})
 
 	})
 }
@@ -36,17 +36,17 @@ async function getLoginStatus() {
 				profile: {}
 			}
 		}) => {
-			const res = data.data;
+			const res = data.data
 			if (res?.account) {
-				Storage.set('userInfo', res?.account?.id);
-				store.commit('setUserLoginState', true);
-				store.commit('setUserId', res?.account?.id);
-				store.commit('setUserAccount', res?.account);
-				store.commit('setUserProfile', res?.profile);
+				Storage.set('userInfo', res?.account?.id)
+				store.commit('setUserLoginState', true)
+				store.commit('setUserId', res?.account?.id)
+				store.commit('setUserAccount', res?.account)
+				store.commit('setUserProfile', res?.profile)
 			}
-			resolve(true);
+			resolve(true)
 		}).catch((reson: string) => {
-			reject(reson);
+			reject(reson)
 		})
 		//获取登录各个阶段的信息，期待登录成功后将信息存入vuex
 	})
@@ -62,7 +62,7 @@ checkIsLogin().then(() => {
 // 	console.error('您还未登录~~')
 // })
 </script>
-<style>
+<style lang='less'>
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
